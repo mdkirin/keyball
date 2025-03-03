@@ -25,7 +25,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 //#    define RGBLIGHT_EFFECT_RAINBOW_MOOD
 //#    define RGBLIGHT_EFFECT_RAINBOW_SWIRL
 //#    define RGBLIGHT_EFFECT_SNAKE
-//#    define RGBLIGHT_EFFECT_KNIGHT
+#    define RGBLIGHT_EFFECT_KNIGHT
 //#    define RGBLIGHT_EFFECT_CHRISTMAS
 //#    define RGBLIGHT_EFFECT_STATIC_GRADIENT
 //#    define RGBLIGHT_EFFECT_RGB_TEST
@@ -47,3 +47,5 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #define NO_AUTO_SHIFT_ALPHA    // 알파벳(A-Z)에는 오토시프트 적용 안 함
 // #define AUTO_SHIFT_REPEAT      // 키를 계속 누르고 있을 때 반복 입력 활성화
 // #define AUTO_SHIFT_NO_SETUP    // 기본 설정 메뉴 비활성화
+
+/* Key Override settings */
