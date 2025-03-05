@@ -35,6 +35,7 @@ enum combo_events {
   WER_MACRO1,
   UIO_MACRO2,
   ZXC_MACRO3,
+  FJ_LANG1,
   COMBO_LENGTH
 };
 
@@ -54,6 +55,7 @@ const uint16_t PROGMEM cd_combo[] = {LT(1,KC_COMM), KC_DOT, COMBO_END};
 const uint16_t PROGMEM wer_combo[] = {KC_W, KC_E, KC_R, COMBO_END};
 const uint16_t PROGMEM uio_combo[] = {KC_U, KC_I, KC_O, COMBO_END};
 const uint16_t PROGMEM zxc_combo[] = {KC_Z, KC_X, KC_C, COMBO_END};
+const uint16_t PROGMEM fj_combo[] = {KC_F, MT(MOD_RSFT,KC_J), COMBO_END};
 
 // 매크로 정의
 enum custom_keycodes {
@@ -76,7 +78,8 @@ combo_t key_combos[] = {
   [CD_PASTE] = COMBO(cd_combo, C(KC_V)),
   [WER_MACRO1] = COMBO(wer_combo, MACRO1),
   [UIO_MACRO2] = COMBO(uio_combo, MACRO2),
-  [ZXC_MACRO3] = COMBO(zxc_combo, MACRO3)
+  [ZXC_MACRO3] = COMBO(zxc_combo, MACRO3),
+  [FJ_LANG1] = COMBO(fj_combo, KC_LNG1)
 };
 
 // 매크로 처리 함수
@@ -135,7 +138,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 
     [3] = LAYOUT_universal(
         S(KC_Q)  , S(KC_W)  , S(KC_E)  , S(KC_R)  , S(KC_T)  ,                            S(KC_Y)  , S(KC_U)  , S(KC_I)  , S(KC_O)  , S(KC_P)  ,
-        S(KC_A)  , S(KC_S)  , S(KC_D)  , S(KC_F)  , S(KC_G)  ,                            S(KC_H)  , S(KC_J)  , S(KC_K)  , S(KC_L)  , KC_LNG1  ,
+        S(KC_A)  , S(KC_S)  , S(KC_D)  , S(KC_F)  , S(KC_G)  ,                            S(KC_H)  , S(KC_J)  , S(KC_K)  , S(KC_L)  , S(KC_ENT)  ,
         S(KC_Z)  , S(KC_X)  , S(KC_C)  , S(KC_V)  , S(KC_B)  ,                            S(KC_N)  , S(KC_M)  , S(KC_COMM) , S(KC_DOT) , S(KC_SLSH) ,
         _______  , _______  , _______  , KC_LNG1  , KC_SPC   , _______  ,     KC_DEL  , KC_LNG1   , _______  , _______  , _______  , _______
     ),
