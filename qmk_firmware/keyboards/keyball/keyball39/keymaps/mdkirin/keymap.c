@@ -36,6 +36,14 @@ enum combo_events {
   UIO_MACRO2,
   ZXC_MACRO3,
   FJ_LANG1,
+  YH_MINUS,
+  HN_EQUAL,
+  SD_F21,
+  DF_F22,
+  RT_LPRN,     // RT 콤보 추가 - 왼쪽 괄호
+  YU_RPRN,     // YU 콤보 추가 - 오른쪽 괄호
+  WE_SELWORDL, // WE 콤보 추가 - 단어 단위 왼쪽 선택
+  ER_SELWORDR, // ER 콤보 추가 - 단어 단위 오른쪽 선택
   COMBO_LENGTH
 };
 
@@ -56,6 +64,14 @@ const uint16_t PROGMEM wer_combo[] = {KC_W, KC_E, KC_R, COMBO_END};
 const uint16_t PROGMEM uio_combo[] = {KC_U, KC_I, KC_O, COMBO_END};
 const uint16_t PROGMEM zxc_combo[] = {KC_Z, KC_X, KC_C, COMBO_END};
 const uint16_t PROGMEM fj_combo[] = {KC_F, MT(MOD_RSFT,KC_J), COMBO_END};
+const uint16_t PROGMEM yh_combo[] = {KC_Y, KC_H, COMBO_END};
+const uint16_t PROGMEM hn_combo[] = {KC_H, KC_N, COMBO_END};
+const uint16_t PROGMEM sd_combo[] = {KC_S, KC_D, COMBO_END};
+const uint16_t PROGMEM df_combo[] = {KC_D, KC_F, COMBO_END};
+const uint16_t PROGMEM rt_combo[] = {KC_R, KC_T, COMBO_END};        // R+T 콤보 정의
+const uint16_t PROGMEM yu_combo[] = {KC_Y, KC_U, COMBO_END};        // Y+U 콤보 정의
+const uint16_t PROGMEM we_combo[] = {KC_W, KC_E, COMBO_END};        // W+E 콤보 정의
+const uint16_t PROGMEM er_combo[] = {KC_E, KC_R, COMBO_END};        // E+R 콤보 정의
 
 // 매크로 정의
 enum custom_keycodes {
@@ -79,7 +95,15 @@ combo_t key_combos[] = {
   [WER_MACRO1] = COMBO(wer_combo, MACRO1),
   [UIO_MACRO2] = COMBO(uio_combo, MACRO2),
   [ZXC_MACRO3] = COMBO(zxc_combo, MACRO3),
-  [FJ_LANG1] = COMBO(fj_combo, KC_LNG1)
+  [FJ_LANG1] = COMBO(fj_combo, KC_LNG1),
+  [YH_MINUS] = COMBO(yh_combo, KC_MINUS),
+  [HN_EQUAL] = COMBO(hn_combo, KC_EQUAL),
+  [SD_F21] = COMBO(sd_combo, KC_F21),
+  [DF_F22] = COMBO(df_combo, KC_F22),
+  [RT_LPRN] = COMBO(rt_combo, KC_LPRN),           // R+T = 왼쪽 괄호 (
+  [YU_RPRN] = COMBO(yu_combo, KC_RPRN),           // Y+U = 오른쪽 괄호 )
+  [WE_SELWORDL] = COMBO(we_combo, C(S(KC_LEFT))), // W+E = Ctrl+Shift+왼쪽 화살표
+  [ER_SELWORDR] = COMBO(er_combo, C(S(KC_RGHT)))  // E+R = Ctrl+Shift+오른쪽 화살표
 };
 
 // 매크로 처리 함수
@@ -117,9 +141,9 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
     // keymap for default
     [0] = LAYOUT_universal(
         KC_Q     , KC_W     , KC_E     , KC_R     , KC_T     ,                            KC_Y     , KC_U     , KC_I     , KC_O     , KC_P     ,
-        KC_A     , KC_S     , KC_D     , KC_F     , KC_G     ,                            KC_H     , MT(MOD_RSFT,KC_J)     , KC_K     , KC_L     , KC_ENT  ,
+        KC_A     , KC_S     , KC_D     , KC_F     , KC_G     ,                            KC_H     , MT(MOD_RSFT,KC_J)     , KC_K     , KC_L     , KC_LNG1   ,
         KC_Z     , KC_X     , KC_C     , KC_V     , KC_B     ,                            KC_N     , KC_M     , LT(1,KC_COMM)  , KC_DOT   , LT(3,KC_SLSH)  ,
-        KC_LCTL  , KC_LGUI  , KC_LALT  , LT(1,KC_ENT) , LT(2,KC_SPC), LT(3,KC_LNG1), LT(2,KC_BSPC), LT(1,KC_SPC), _______, _______, _______, MO(4)
+        KC_LCTL  , KC_LGUI  , KC_LALT  , LT(1,KC_ENT) , LT(2,KC_SPC), KC_LSFT , LT(2,KC_BSPC), LT(1,KC_SPC), _______, _______, _______, MO(4)
     ),
 
     [1] = LAYOUT_universal(
@@ -139,7 +163,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
     [3] = LAYOUT_universal(
         S(KC_Q)  , S(KC_W)  , S(KC_E)  , S(KC_R)  , S(KC_T)  ,                            S(KC_Y)  , S(KC_U)  , S(KC_I)  , S(KC_O)  , S(KC_P)  ,
         S(KC_A)  , S(KC_S)  , S(KC_D)  , S(KC_F)  , S(KC_G)  ,                            S(KC_H)  , S(KC_J)  , S(KC_K)  , S(KC_L)  , S(KC_ENT)  ,
-        S(KC_Z)  , S(KC_X)  , S(KC_C)  , S(KC_V)  , S(KC_B)  ,                            S(KC_N)  , S(KC_M)  , S(KC_COMM) , S(KC_DOT) , S(KC_SLSH) ,
+        S(KC_Z)  , S(KC_X)  , S(KC_C)  , S(KC_V)  , S(KC_B)  ,                            S(KC_N)  , S(KC_M)  , S(KC_COMM) , S(KC_DOT) , _______ ,
         _______  , _______  , _______  , KC_LNG1  , KC_SPC   , _______  ,     KC_DEL  , KC_LNG1   , _______  , _______  , _______  , _______
     ),
  
