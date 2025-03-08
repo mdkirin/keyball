@@ -44,6 +44,9 @@ enum combo_events {
   YU_RPRN,     // YU 콤보 추가 - 오른쪽 괄호
   WE_SELWORDL, // WE 콤보 추가 - 단어 단위 왼쪽 선택
   ER_SELWORDR, // ER 콤보 추가 - 단어 단위 오른쪽 선택
+  TA_MACRO,    // TA 콤보 - 의학 용어 매크로
+  HP_MACRO,    // HP 콤보 - 의학 용어 매크로
+  LP_MACRO,    // LP 콤보 - 의학 용어 매크로
   COMBO_LENGTH
 };
 
@@ -68,16 +71,22 @@ const uint16_t PROGMEM yh_combo[] = {KC_Y, KC_H, COMBO_END};
 const uint16_t PROGMEM hn_combo[] = {KC_H, KC_N, COMBO_END};
 const uint16_t PROGMEM sd_combo[] = {KC_S, KC_D, COMBO_END};
 const uint16_t PROGMEM df_combo[] = {KC_D, KC_F, COMBO_END};
-const uint16_t PROGMEM rt_combo[] = {KC_R, KC_T, COMBO_END};        // R+T 콤보 정의
-const uint16_t PROGMEM yu_combo[] = {KC_Y, KC_U, COMBO_END};        // Y+U 콤보 정의
-const uint16_t PROGMEM we_combo[] = {KC_W, KC_E, COMBO_END};        // W+E 콤보 정의
-const uint16_t PROGMEM er_combo[] = {KC_E, KC_R, COMBO_END};        // E+R 콤보 정의
+const uint16_t PROGMEM rt_combo[] = {KC_R, KC_T, COMBO_END};
+const uint16_t PROGMEM yu_combo[] = {KC_Y, KC_U, COMBO_END};
+const uint16_t PROGMEM we_combo[] = {KC_W, KC_E, COMBO_END};
+const uint16_t PROGMEM er_combo[] = {KC_E, KC_R, COMBO_END};
+const uint16_t PROGMEM ta_combo[] = {KC_T, KC_A, COMBO_END};        // T+A 콤보 정의
+const uint16_t PROGMEM hp_combo[] = {KC_H, KC_P, COMBO_END};        // H+P 콤보 정의
+const uint16_t PROGMEM lp_combo[] = {KC_L, KC_P, COMBO_END};        // L+P 콤보 정의
 
 // 매크로 정의
 enum custom_keycodes {
   MACRO1 = SAFE_RANGE,
   MACRO2,
-  MACRO3
+  MACRO3,
+  MACRO_TA,  // Tubular adenoma 매크로
+  MACRO_HP,  // Hyperplastic polyp 매크로
+  MACRO_LP   // Lymphoid polyp 매크로
 };
 
 // 콤보 테이블
@@ -100,10 +109,13 @@ combo_t key_combos[] = {
   [HN_EQUAL] = COMBO(hn_combo, KC_EQUAL),
   [SD_F21] = COMBO(sd_combo, KC_F21),
   [DF_F22] = COMBO(df_combo, KC_F22),
-  [RT_LPRN] = COMBO(rt_combo, KC_LPRN),           // R+T = 왼쪽 괄호 (
-  [YU_RPRN] = COMBO(yu_combo, KC_RPRN),           // Y+U = 오른쪽 괄호 )
-  [WE_SELWORDL] = COMBO(we_combo, C(S(KC_LEFT))), // W+E = Ctrl+Shift+왼쪽 화살표
-  [ER_SELWORDR] = COMBO(er_combo, C(S(KC_RGHT)))  // E+R = Ctrl+Shift+오른쪽 화살표
+  [RT_LPRN] = COMBO(rt_combo, KC_LPRN),
+  [YU_RPRN] = COMBO(yu_combo, KC_RPRN),
+  [WE_SELWORDL] = COMBO(we_combo, C(S(KC_LEFT))),
+  [ER_SELWORDR] = COMBO(er_combo, C(S(KC_RGHT))),
+  [TA_MACRO] = COMBO(ta_combo, MACRO_TA),  // T+A 콤보를 매크로에 연결
+  [HP_MACRO] = COMBO(hp_combo, MACRO_HP),  // H+P 콤보를 매크로에 연결
+  [LP_MACRO] = COMBO(lp_combo, MACRO_LP)   // L+P 콤보를 매크로에 연결
 };
 
 // 매크로 처리 함수
@@ -131,6 +143,21 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
         tap_code(KC_8);
       }
       return false;
+    case MACRO_TA:
+      if (record->event.pressed) {
+        SEND_STRING("Tubular adenoma, low grade dysplasia with clear resection margin");
+      }
+      return false;
+    case MACRO_HP:
+      if (record->event.pressed) {
+        SEND_STRING("Hyperplastic polyp");
+      }
+      return false;
+    case MACRO_LP:
+      if (record->event.pressed) {
+        SEND_STRING("Lymphoid polyp");
+      }
+      return false;
     default:
       return true;
   }
@@ -148,8 +175,8 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 
     [1] = LAYOUT_universal(
         KC_F1    , KC_F2    , KC_F3    , KC_F4    , S(KC_9)  ,                            S(KC_0)    , KC_HOME   , KC_UP    , KC_END   , _______   ,
-        KC_F5    , KC_F6    , KC_F7    , KC_F8    , S(KC_EQUAL),                          KC_MINUS   , KC_LEFT   , KC_DOWN   , KC_RIGHT   , _______   ,
-        KC_F9    , KC_F10   , KC_F11   , KC_F12   , KC_F13   ,                           _______   , KC_BTN1   , _______   , KC_BTN2   , SCRL_MO  ,
+        KC_F5    , KC_F6    , KC_F7    , KC_F8    , S(KC_EQUAL),                          KC_MINUS   , KC_LEFT   , KC_DOWN   , KC_RIGHT   , KC_ENT   ,
+        KC_F9    , KC_F10   , KC_F11   , KC_F12   , KC_F13   ,                           KC_F13   , KC_BTN1   , _______   , KC_BTN2   , SCRL_MO  ,
         _______  , _______  , _______  , _______  , _______  , _______  ,      _______    , _______   , _______  , _______  , _______  , _______ 
     ),
 
